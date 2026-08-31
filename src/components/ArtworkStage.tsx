@@ -52,7 +52,6 @@ export function ArtworkStage({ artwork, viewMode, onLoad3d, onShowStory }: Artwo
             <button className="ar-button" slot="ar-button" type="button">
               View in your space
             </button>
-            <p className="model-progress" slot="progress-bar">Loading the reviewed model…</p>
           </model-viewer>
         ) : isBraider ? (
           <>

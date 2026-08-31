@@ -74,6 +74,7 @@ test('registers one seven-tool surface and keeps the full flow visible and revie
   });
   expect(presented).toMatchObject({ status: 'ok', state_revision: 2 });
   await page.waitForFunction(() => Boolean((document.querySelector('model-viewer') as HTMLElement & { loaded?: boolean } | null)?.loaded));
+  await expect(page.getByText('Loading the reviewed model…')).toHaveCount(0);
   expect(modelRequests).toEqual(['/models/the-braider/the-braider-6in.glb']);
 
   const configured = await executeTool(page, 'configure_artwork', {
