@@ -62,7 +62,6 @@ export default function App() {
         intent,
         ...(Number.isFinite(maximumBudget) ? { maximum_budget_usd: maximumBudget } : {}),
         availability: 'available_now',
-        fulfillment,
       },
       collectorRoomService.manualContext(),
     );

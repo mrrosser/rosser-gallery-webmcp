@@ -45,7 +45,7 @@ npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite. The safe default is `VITE_CHECKOUT_MODE=review_only`; this repository contains no Square secret, catalog identifier, customer data, or live provider function.
+Open the local URL printed by Vite. This repository is unconditionally review-only and has no checkout-mode setting, Square secret, catalog identifier, customer data, or live provider function.
 
 Run the full quality gate:
 
@@ -72,9 +72,9 @@ The included `netlify.toml` builds `dist/`, applies restrictive headers, caches 
 - Logs contain event names, outcome codes, correlation IDs, and revision numbers only. Prompts and tool arguments are not logged.
 - Quote and checkout reviews are in-memory, short-lived, and contain no PII.
 - Native AR requires a human click. The tool surface cannot submit an inquiry, enter payment information, or complete a purchase.
-- The standalone Square boundary makes no fetch and performs no external navigation.
+- The standalone review boundary makes no fetch and performs no external navigation.
 
-See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the data flow and [`docs/execplans/collectors-room-webmcp.md`](docs/execplans/collectors-room-webmcp.md) for the implementation record.
+See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the data flow, [`CHALLENGE_WORK.md`](CHALLENGE_WORK.md) for the dated existing-versus-new disclosure, and [`docs/execplans/collectors-room-webmcp.md`](docs/execplans/collectors-room-webmcp.md) for the implementation record.
 
 ## Licensing
 

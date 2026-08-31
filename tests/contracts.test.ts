@@ -33,6 +33,7 @@ describe('WebMCP contracts', () => {
 
   it('rejects unreviewed fields and invalid scale increments', () => {
     expect(searchCollectionSchema.safeParse({ intent: 'trust', arbitrary_url: 'https://example.com' }).success).toBe(false);
+    expect(searchCollectionSchema.safeParse({ intent: 'trust', fulfillment: 'pickup_new_orleans' }).success).toBe(false);
     expect(configureArtworkSchema.safeParse({
       mode: 'mini',
       work_id: 'the-braider',

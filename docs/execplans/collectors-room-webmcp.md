@@ -2,7 +2,7 @@
 
 **Owner:** RT SOLUTIONS LLC  
 **Started:** 2026-08-30  
-**Status:** Standalone implementation and local quality gate complete
+**Status:** Final local quality gate complete; reviewed remote release pending
 
 ## Objective
 
@@ -28,6 +28,11 @@ Deliver a self-contained Vite/React/TypeScript challenge application that demons
 - [x] Complete lint, 14 unit/component tests, TypeScript build, Vite build, and artifact smoke.
 - [x] Pass two Playwright browser-shim checks covering singleton seven-tool registration, representative agent flow, visible parity/Undo, zero provider traffic/navigation, and 390-pixel mobile overflow.
 - [x] Inspect full-page desktop and 390-pixel mobile renders locally; verify responsive layout and manual journey.
+- [x] Reconcile public contracts and copy with implementation behavior: remove the unused search fulfillment field, describe confirmation as an agent instruction, and document the unconditional review-only boundary.
+- [x] Add a dated existing-versus-new challenge-work record without representing the private production repository as public submission source.
+- [x] Reproduce the deployed 3D load failure, align `present_artwork(open_3d: true)` with eager automatic model reveal, allow only WebAssembly evaluation needed by the self-hosted decoder, and remove the unrecognized CSP directive while retaining same-origin script and network restrictions.
+- [x] Pass the complete local quality gate after final review corrections: ESLint, 14 Vitest checks, TypeScript/Vite build, artifact smoke, loaded-GLB browser flow, review-only boundary, and 390-pixel mobile overflow.
+- [ ] Publish the reviewed GitHub commit and a new immutable Netlify preview, then repeat signed-out browser and header checks.
 - [ ] Perform supported ChatGPT tool-discovery checks on the deployed preview.
 
 ## Acceptance

@@ -10,7 +10,6 @@ export const searchCollectionSchema = strictObject({
   intent: z.string().trim().min(1).max(120),
   maximum_budget_usd: z.number().min(1).max(1_000_000).optional(),
   availability: z.enum(['available_now', 'commission']).optional(),
-  fulfillment: z.enum(['pickup_new_orleans', 'delivery_quote']).optional(),
 });
 
 export const inspectArtworkSchema = strictObject({ work_id: workId });
@@ -85,7 +84,7 @@ export const TOOL_CONTRACTS: readonly ToolContract[] = [
   {
     name: 'search_collection',
     title: 'Search the Rosser Gallery collection',
-    description: 'Curate up to three reviewed artworks by meaning, budget, availability, and fulfillment. Read only; does not change the page or retain the visitor intent.',
+    description: 'Curate up to three reviewed artworks by meaning, Mini budget, and availability. Read only; does not change the page or retain the visitor intent.',
     readOnly: true,
     validator: searchCollectionSchema,
     inputSchema: {
@@ -96,7 +95,6 @@ export const TOOL_CONTRACTS: readonly ToolContract[] = [
         intent: { type: 'string', minLength: 1, maxLength: 120 },
         maximum_budget_usd: { type: 'number', minimum: 1, maximum: 1_000_000 },
         availability: { type: 'string', enum: ['available_now', 'commission'] },
-        fulfillment: { type: 'string', enum: ['pickup_new_orleans', 'delivery_quote'] },
       },
     },
   },
@@ -172,7 +170,7 @@ export const TOOL_CONTRACTS: readonly ToolContract[] = [
   {
     name: 'prepare_checkout',
     title: 'Prepare an exact Mini checkout review',
-    description: 'Open a visible 10-minute checkout review for the current Mini configuration. It creates no payment and requires explicit confirmation before any handoff.',
+    description: 'Open a visible 10-minute checkout review for the current Mini configuration. It creates no payment; the result instructs the agent to request explicit user confirmation before calling the review boundary.',
     readOnly: false,
     validator: prepareCheckoutSchema,
     inputSchema: {
@@ -182,8 +180,8 @@ export const TOOL_CONTRACTS: readonly ToolContract[] = [
   },
   {
     name: 'open_square_checkout',
-    title: 'Open the reviewed Square checkout handoff',
-    description: 'After explicit user instruction, hand off the exact unexpired review to Square. The standalone demo defaults to review-only mode and never enters payment information or completes a purchase.',
+    title: 'Validate the reviewed checkout boundary',
+    description: 'Use only after explicit user instruction to validate the exact unexpired review at the public review-only boundary. This demo never contacts Square, navigates externally, or creates a payment.',
     readOnly: false,
     validator: openSquareCheckoutSchema,
     inputSchema: {

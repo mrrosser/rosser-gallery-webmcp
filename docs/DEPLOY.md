@@ -24,7 +24,7 @@ Verify at mobile and desktop widths:
 1. Create a new Netlify site from the public repository.
 2. Use the repository root, build command `npm run build`, and publish directory `dist`.
 3. Set Node to 22. No secrets are required.
-4. Keep `VITE_PUBLIC_WEBMCP_ENABLED=true` and `VITE_CHECKOUT_MODE=review_only`.
+4. Keep `VITE_PUBLIC_WEBMCP_ENABLED=true`. This repository is unconditionally review-only; no checkout-mode setting is used.
 5. Deploy a preview after `npm run check` passes locally, including the browser-shim E2E suite.
 6. Inspect response headers, direct-route reload, GLB/USDZ MIME types, and the browser console.
 7. Validate tool discovery in a supported ChatGPT desktop browser and confirm all seven names.

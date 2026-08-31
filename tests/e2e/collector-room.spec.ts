@@ -35,9 +35,11 @@ async function executeTool(page: Page, name: string, input: unknown): Promise<Re
 
 test('registers one seven-tool surface and keeps the full flow visible and review-only', async ({ page }) => {
   const nonLocalRequests: string[] = [];
+  const modelRequests: string[] = [];
   page.on('request', (request) => {
     const url = new URL(request.url());
     if (url.hostname !== '127.0.0.1') nonLocalRequests.push(request.url());
+    if (url.pathname.endsWith('.glb')) modelRequests.push(url.pathname);
   });
   await installWebMcpShim(page);
   await page.goto('/');
@@ -61,17 +63,18 @@ test('registers one seven-tool surface and keeps the full flow visible and revie
     intent: 'A gift about trust for my sister',
     maximum_budget_usd: 100,
     availability: 'available_now',
-    fulfillment: 'pickup_new_orleans',
   });
   expect(search).toMatchObject({ status: 'ok', code: 'collection_curated', state_revision: 1 });
   expect(((search.data as { matches: Array<{ work_id: string }> }).matches)[0]?.work_id).toBe('the-braider');
 
   const presented = await executeTool(page, 'present_artwork', {
     work_id: 'the-braider',
-    open_3d: false,
+    open_3d: true,
     expected_revision: 1,
   });
   expect(presented).toMatchObject({ status: 'ok', state_revision: 2 });
+  await page.waitForFunction(() => Boolean((document.querySelector('model-viewer') as HTMLElement & { loaded?: boolean } | null)?.loaded));
+  expect(modelRequests).toEqual(['/models/the-braider/the-braider-6in.glb']);
 
   const configured = await executeTool(page, 'configure_artwork', {
     mode: 'mini',
@@ -102,14 +105,14 @@ test('registers one seven-tool surface and keeps the full flow visible and revie
     state_revision: 5,
     data: { handoff_mode: 'review_only', payment_created: false, external_navigation: false },
   });
-  await expect(page.getByRole('status')).toContainText('Review-only demo');
+  await expect(page.locator('.status-message')).toContainText('Review-only demo');
   await expect(page.getByText('Agent', { exact: true }).first()).toBeVisible();
   expect(page.url()).toBe('http://127.0.0.1:4173/');
   expect(nonLocalRequests).toEqual([]);
 
   await page.getByRole('button', { name: 'Undo latest change' }).click();
   await expect(page.getByText('Shared state · revision 6')).toBeVisible();
-  await expect(page.getByRole('status')).toContainText('Nothing has been purchased');
+  await expect(page.locator('.status-message')).toContainText('Nothing has been purchased');
   await expect(page.getByText('Exact Mini review', { exact: true })).toBeVisible();
   expect(nonLocalRequests).toEqual([]);
 });

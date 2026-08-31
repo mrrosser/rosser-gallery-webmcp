@@ -45,8 +45,8 @@ export function ArtworkStage({ artwork, viewMode, onLoad3d, onShowStory }: Artwo
             touch-action="pan-y"
             shadow-intensity="1"
             environment-image="neutral"
-            loading="lazy"
-            reveal="interaction"
+            loading="eager"
+            reveal="auto"
             onError={() => setViewerFailed(true)}
           >
             <button className="ar-button" slot="ar-button" type="button">
